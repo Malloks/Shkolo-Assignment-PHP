@@ -1,0 +1,280 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 70%;
+    margin: auto;
+    height: 70vh;
+    align-items: center;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #393939;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px;
+    width: 80%;
+    height: 190px;
+    position: relative;
+}
+
+.grid-button {
+    background-image: url('Assets/addImage.png');
+    background-size: 45%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    -webkit-text-stroke: 1px black;
+}
+
+.grid-button span {
+    border: 2px solid black; /* Add border around text */
+    padding: 5px; /* Space around text */
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background to enhance readability */
+    border-radius: 4px; /* Rounded corners for the border */
+}
+
+.grid-button:hover{
+    background-size: 40%;
+    font-size: 20px;
+}
+
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    display: none;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    background-image: url('Assets/Edit.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+}
+
+.delete-button {
+    position: absolute;
+    top: 60px; /* Position it just below the edit button */
+    right: 10px;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    display: none;
+    border: 2px solid #ffffff !important;
+    border: none;
+    border-radius: 50%;
+    background-image: url('Assets/Delete.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+}
+
+.delete-button:hover {
+    top: 62px;
+    right: 12px;
+    height: 35px;
+    width: 35px;
+}
+
+.edit-button:hover {
+    top: 12px;
+    right: 12px;
+    height: 35px;
+    width: 35px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px; /* Adjust maximum width as needed */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and input */
+}
+
+label {
+    font-weight: bold;
+    width: 60px; /* Fixed width for labels */
+}
+
+input[type="text"],
+input[type="url"] {
+    padding: 8px;
+    border: 3px solid #2e2e2e;
+    border-radius: 8px;
+    font-style: italic;
+    font-weight: bolder;
+    height: 20px;
+    width: 100%;
+}
+
+input[type="color"] {
+    padding: 4px;
+    border: 3px solid #2e2e2e;
+    border-radius: 8px;
+    font-style: italic;
+    font-weight: bolder;
+    height: 40px;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: 50%;
+    align-self: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .grid-container {
+        width: 100%; /* Allow grid to use full width */
+    }
+
+    .grid-item {
+        width: 80%; /* Make grid items adapt to smaller screens */
+        height: 150px; /* Reduce item height */
+    }
+
+    .edit-button {
+        top: 12px;
+        right: 52px;
+        height: 37px;
+        width: 37px; /* Smaller buttons */
+    }
+    
+    .delete-button {
+        top: 12px;
+        height: 37px;
+        width: 37px; /* Smaller buttons */
+    }
+
+    .edit-button:hover {
+        top: 12px;
+        right: 52px;
+        height: 35px;
+        width: 35px; /* Smaller buttons */
+    }
+    
+    .delete-button:hover {
+        top: 14px;
+        height: 35px;
+        width: 35px; /* Smaller buttons */
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
+        grid-template-rows: auto;
+        gap: 10px;
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .grid-item {
+        height: 150px;
+        width: 150px;
+        margin: 10px; /* Reduce margin */
+        justify-self: center;    
+}
+
+    .grid-button {
+        background-size: 9vh;
+        font-size: 1rem; /* Scale down font size */
+    }
+
+    .grid-button:hover {
+        background-size: 8vh;
+        font-size: 1rem; /* Scale down font size */
+    }
+
+    .edit-button {
+        top: 12px;
+        right: 52px;
+        height: 35px;
+        width: 35px; /* Smaller buttons */
+    }
+    
+    .delete-button {
+        top: 12px;
+        height: 35px;
+        width: 35px; /* Smaller buttons */
+    }
+
+    .edit-button:hover {
+        top: 14px;
+        right: 52px;
+        height: 32px;
+        width: 32px; /* Smaller buttons */
+    }
+    
+    .delete-button:hover {
+        top: 14px;
+        height: 32px;
+        width: 32px; /* Smaller buttons */
+    }
+}
+
+@media (max-width: 400px) {
+    .grid-container {
+       grid-template-columns: 1fr; /* One column layout */
+    }
+
+    .grid-item {
+        height: 120px;
+    }
+
+    button {
+        width: 40%; /* Make button wider on smaller screens */
+    }
+}
