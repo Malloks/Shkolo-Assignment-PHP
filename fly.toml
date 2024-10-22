@@ -3,11 +3,10 @@ app = "shkolo-assignment" # Replace with your app name
 kill_signal = "SIGINT"
 kill_timeout = 5
 
-# Use the Cloud Native Buildpack for PHP
-builder = "heroku/php"
+[build]
+  builder = "heroku/php" # Use the Cloud Native Buildpack for PHP
 
 [[services]]
-  http_service = {
+  [http_service]
     internal_port = 8080
     auto_rollback = true
-  }
