@@ -2,6 +2,7 @@
     "require": {
         "kreait/firebase-php": "^5.26",
         "google/cloud-firestore": "^1.41",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "grpc/grpc": "^1.39"
     }
 }
