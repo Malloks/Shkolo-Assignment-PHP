@@ -1,7 +1,7 @@
 app = "your-app-name" # Replace with your app name
 
 [build]
-  builder = "heroku/buildpacks:22" # Choose an appropriate builder for your project
+  builder = "heroku/buildpacks:latest" # Choose an appropriate builder for your project
 
 [[services]]
   [services.http] # This is the correct way to define the HTTP service
