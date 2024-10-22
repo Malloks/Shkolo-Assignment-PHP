@@ -1,0 +1,16 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "env": {
+        "PHP_INI_SCAN_DIR": "/usr/local/etc/php/conf.d"
+    },
+    "plugins": [
+        {
+            "name": "php",
+            "options": {
+                "extensions": ["grpc"]
+            }
+        }
+    ]
+}
