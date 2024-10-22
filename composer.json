@@ -1,6 +1,6 @@
 {
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.3",
         "kreait/firebase-php": "^5.26",
         "google/cloud-firestore": "^1.41",
         "guzzlehttp/guzzle": "^7.9",
