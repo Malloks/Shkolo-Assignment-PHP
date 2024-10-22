@@ -1,17 +1,12 @@
-app = "shkolo-assignment" # Replace with your app name
+app = "your-app-name" # Replace with your app name
 
-kill_signal = "SIGINT"
-kill_timeout = 5
+[build]
+  builder = "heroku/buildpacks:20" # Choose an appropriate builder for your project
 
-# Use a newer builder
-builder = "heroku/builder:20" # Choose an appropriate builder for your project
-
-# Set the environment variable to allow using the sunset image
 [env]
   ALLOW_EOL_SHIMMED_BUILDER = "1"
 
 [[services]]
-  http_service = {
+  [services.http] # This is the correct way to define the HTTP service
     internal_port = 8080
     auto_rollback = true
-  }
