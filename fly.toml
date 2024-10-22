@@ -1,0 +1,10 @@
+app = "your-app-name" # Replace with your app name
+
+[build]
+  builder = "heroku/buildpacks:20" # Choose an appropriate builder for your project
+
+[[services]]
+  http_service = {
+    internal_port = 8080
+    auto_rollback = true
+  }
