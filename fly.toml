@@ -4,7 +4,7 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 
 [build]
-  builder = "heroku/php" # Use the Cloud Native Buildpack for PHP
+  builder = "heroku/buildpacks:24" # Using the current stable builder
 
 [[services]]
   [http_service]
