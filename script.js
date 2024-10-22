@@ -102,11 +102,13 @@ async function Bootstrap() {
 // Function to fetch all hyperlinks from the PHP server
 async function getAllHyperlinks() {
     try {
-        const response = await fetch('getHyperlinks.php'); // PHP file to fetch all hyperlinks
-        return await response.json();
+        const response = await fetch('/getHyperlinks.php');
+        const data = await response.json(); // Parse the JSON
+
+        console.log("Raw response:", data); // Log the raw response to check its structure
+        return data; // Return the parsed data
     } catch (error) {
-        console.error('Error fetching hyperlinks:', error);
-        return [];
+        console.error("Error fetching hyperlinks:", error);
     }
 }
 

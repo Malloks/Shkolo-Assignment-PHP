@@ -21,7 +21,7 @@ $factory = (new Factory)
         'auth_provider_x509_cert_url' => 'https://www.googleapis.com/oauth2/v1/certs',
         'client_x509_cert_url' => 'https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-7be8x%40shkolo-task-ea556.iam.gserviceaccount.com',
     ])
-    ->withDatabaseUri('https://your-database-url.firebasedatabase.app'); // Replace with your actual Firestore database URL
+    ->withDatabaseUri('https://shkolo-task-ea556.firebaseio.com'); // Replace with your actual Firestore database URL
 
 // Initialize Firestore
 $firestore = $factory->createFirestore();
