@@ -4,6 +4,6 @@ app = "your-app-name" # Replace with your app name
   builder = "heroku/buildpacks:20" # Choose an appropriate builder for your project
 
 [[services]]
-  [[services.http]] # Use 'http' instead of 'http_service'
+  [services.http] # This is the correct way to define the HTTP service
     internal_port = 8080
     auto_rollback = true
