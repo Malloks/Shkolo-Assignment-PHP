@@ -2,26 +2,39 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include your database connection file here
-require_once 'db_connection.php';
+require 'vendor/autoload.php';
 
-header('Content-Type: application/json');
+use Google\Cloud\Firestore\FirestoreClient;
+
+$firestore = new FirestoreClient([
+    'projectId' => 'shkolo-task-ea556',
+]);
 
 $data = json_decode(file_get_contents('php://input'), true);
-$docId = $data['docId'] ?? null;
-$updatedData = $data['updatedData'] ?? [];
 
-if (!$docId) {
-    echo json_encode(['error' => 'No ID provided']);
+if (!$data || !isset($data['docId']) || !isset($data['updatedData'])) {
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Invalid input']);
     exit;
 }
 
+$docId = $data['docId'];
+$updatedData = $data['updatedData'];
+
+// Log incoming data for debugging
+file_put_contents('php://stderr', print_r($data, true));
+
+$collectionRef = $firestore->collection('hyperlinks');
+
 try {
-    $stmt = $pdo->prepare("UPDATE hyperlinks SET title = ?, url = ?, color = ?, updated_on = NOW() WHERE id = ?");
-    $stmt->execute([$updatedData['title'], $updatedData['url'], $updatedData['color'], $docId]);
-    
-    echo json_encode(['success' => 'Hyperlink updated']);
+    // Update the document in Firestore, merging with existing data
+    $collectionRef->document($docId)->set($updatedData, ['merge' => true]);
+
+    // Send a success response
+    header('Content-Type: application/json');
+    echo json_encode(['success' => true]);
 } catch (Exception $e) {
-    echo json_encode(['error' => 'Error updating hyperlink: ' . $e->getMessage()]);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
 }
 ?>

@@ -4,6 +4,7 @@ const button_container = document.querySelector('.grid-container');
 // Load button configurations from PHP server
 async function Bootstrap() {
     const saved = await getAllHyperlinks();
+    console.log('Retrieved hyperlinks:', saved); // Log the retrieved hyperlinks
     const buttons = [];
 
     // Clear existing buttons
@@ -62,7 +63,13 @@ async function Bootstrap() {
 
         // Delete hyperlink
         delButton.addEventListener('click', async () => {
-            await updateHyperlink(hyperlink.id, { ...hyperlink, deleted_on: new Date() });
+            const currentTime = new Date(); // Get the current timestamp
+            console.log('Deleting hyperlink:', hyperlink.id, 'with deleted_on:', currentTime); // Log the data being sent
+            if (hyperlink.id) {
+                await updateHyperlink(hyperlink.id, { deleted_on: currentTime }); // Update only the deleted_on field
+            } else {
+                console.error('No hyperlink ID found for deletion');
+            }
             Bootstrap(); // Reload after deleting
         });
 
@@ -117,6 +124,15 @@ async function updateHyperlink(docId, updatedData) {
     } catch (error) {
         console.error('Error updating hyperlink:', error);
     }
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const hyperlinkId = urlParams.get('hyperlink_id');
+
+// Fetch hyperlink data by ID
+async function fetchHyperlinkData(id) {
+    const response = await fetch(`getHyperlink.php?id=${id}`); // Create this PHP file
+    return await response.json();
 }
 
 Bootstrap();

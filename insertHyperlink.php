@@ -1,28 +1,63 @@
 <?php
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include your database connection file here
-require_once 'db_connection.php';
+// Autoload Guzzle and Google Cloud libraries
+require 'vendor/autoload.php'; // Ensure you have installed Guzzle and Google Cloud PHP libraries using Composer
 
-header('Content-Type: application/json');
+use Google\Cloud\Firestore\FirestoreClient;
+use Google\Cloud\Core\Timestamp; // Import the Timestamp class
 
+// Create a Firestore client
+$firestore = new FirestoreClient([
+    'projectId' => 'shkolo-task-ea556', // Replace with your project ID
+]);
+
+// Get the input data from the request
 $data = json_decode(file_get_contents('php://input'), true);
+
+// Check if data is received
+if (!$data) {
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'No data received']);
+    exit;
+}
+
+// Extract variables from the input data
 $title = $data['title'] ?? null;
 $url = $data['url'] ?? null;
 $color = $data['color'] ?? null;
 $position = $data['position'] ?? null;
 
+// Validate the input data
 if (!$title || !$url || !$color || $position === null) {
-    echo json_encode(['error' => 'Missing required fields']);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Invalid input']);
     exit;
 }
 
+// Reference the Firestore collection
+$collectionRef = $firestore->collection('hyperlinks');
+
 try {
-    $stmt = $pdo->prepare("INSERT INTO hyperlinks (title, url, color, position, created_on, updated_on) VALUES (?, ?, ?, ?, NOW(), NOW())");
-    $stmt->execute([$title, $url, $color, $position]);
-    echo json_encode(['success' => 'Hyperlink inserted', 'id' => $pdo->lastInsertId()]);
+    // Add a new document to the collection
+    $docRef = $collectionRef->add([
+        'title' => $title,
+        'url' => $url,
+        'color' => $color,
+        'position' => $position,
+        'created_on' => new Timestamp(new DateTime()), // Use DateTime for the current time
+        'updated_on' => new Timestamp(new DateTime()), // Use DateTime for the current time
+        'deleted_on' => null,
+    ]);
+
+    // Return the document ID in JSON format
+    header('Content-Type: application/json');
+    echo json_encode(['id' => $docRef->id()]);
 } catch (Exception $e) {
-    echo json_encode(['error' => 'Error inserting hyperlink: ' . $e->getMessage()]);
+    // Return an error message if insertion fails
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
 }
 ?>
