@@ -1,12 +1,13 @@
-app = "your-app-name" # Replace with your app name
+app = "shkolo-assignment" # Replace with your app name
 
-[build]
-  builder = "heroku/buildpacks:20" # Choose an appropriate builder for your project
+kill_signal = "SIGINT"
+kill_timeout = 5
 
-[env]
-  ALLOW_EOL_SHIMMED_BUILDER = "1"
+# Use the Cloud Native Buildpack for PHP
+builder = "heroku/php"
 
 [[services]]
-  [services.http] # This is the correct way to define the HTTP service
+  http_service = {
     internal_port = 8080
     auto_rollback = true
+  }
